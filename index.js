@@ -6,6 +6,7 @@ fb.clear();
 var Chance = require('chance');
 var chance = new Chance();
 
+var _ = require('lodash')
 var chroma = require('chroma-js');
 var colorScale = chroma.scale([process.env.MAX_COLOR, process.env.MIN_COLOR]).domain([-10, -80])
 
@@ -31,7 +32,7 @@ function writeColor(signal) {
   var rgb = colorScale(signal)._rgb
   console.log(signal)
   console.log(Math.floor(rgb[0]), Math.floor(rgb[1]), Math.floor(rgb[2]))
-  fb.color();
+  fb.color(Math.floor(rgb[0]), Math.floor(rgb[1]), Math.floor(rgb[2]));
   fb.rect(0, 0, xMax, yMax, true, 1);
   fb.blit();
 }
