@@ -12,7 +12,6 @@
     "chance": "^1.0.4",
     "chroma-js": "^1.2.1",
     "pitft": "*",
-    "wireless": "^0.3.2",
     "wireless-tools": "*",
     "lodash": "*"
   }

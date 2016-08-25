@@ -14,10 +14,15 @@ util.inherits(Wand, EventEmitter);
 
 Wand.prototype._monitor = function() {
     var self = this
+    if (!self.ssid) {
+      self.emit('error', 'A network SSID must be set');
+    }
     setInterval(function () {
       _scan(self.ssid, function(err, network) {
         if (err) {
           self.emit('error', err);
+        } else if (!network) {
+          self.emit('error', 'SSID not found on network');
         } else {
           self.emit('change', network);
         }
@@ -27,8 +32,6 @@ Wand.prototype._monitor = function() {
 
 _scan = function(ssid, callback) {
   iwlist.scan('wlan0', function(err, networks) {
-    // console.log('ssid: ', ssid)
-    // console.log('networks: ', networks)
     callback(err, _.find(networks, { 'ssid': ssid }));
   });
 }
