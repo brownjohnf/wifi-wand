@@ -33,7 +33,7 @@ function writeColor(signal) {
              .map(div)
              .value()
 
-  fb.color().apply(null, rgb)
+  fb.color(rgb[0], rgb[1], rgb[2])
   fb.rect(0, 0, xMax, yMax, true)
   fb.blit()
 }
