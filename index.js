@@ -10,11 +10,11 @@ var chance = new Chance();
 var chroma = require('chroma-js');
 var colorScale = chroma.scale(['red', 'green']).domain([-30, -80])
 
-var Monitor = require('./monitor')
+var Wand = require('./wand')
 
-m = new Monitor('resin_io', 3000)
+w = new Wand('resin_io', 3000)
 
-m.on('change', function(network) {
+w.on('change', function(network) {
     console.log('booom')
     writeColor(network.strength)
 })
