@@ -27,7 +27,7 @@ Wand.prototype._monitor = function() {
 
 _scan = function(ssid, callback) {
   iwlist.scan('wlan0', function(err, networks) {
-    console.log('ssid: ', ssid)
+    // console.log('ssid: ', ssid)
     // console.log('networks: ', networks)
     callback(err, _.find(networks, { 'ssid': ssid }));
   });
