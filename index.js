@@ -15,7 +15,6 @@ var Wand = require('./wand')
 w = new Wand(process.env.SSID, process.env.SCAN_INTERVAL)
 
 w.on('change', function(network) {
-  console.log(network)
   writeColor(network.signal)
 })
 
@@ -33,7 +32,7 @@ function floor(v) {
 
 function writeColor(signal) {
   // chance.integer({min: -80, max: -10})
-  var rgb = __.dropRight(colorScale(signal)._rgb)
+  var rgb = _.dropRight(colorScale(signal)._rgb)
   fb.color(_.map(rgb, floor));
   fb.rect(0, 0, xMax, yMax, true, 1);
   fb.blit();
