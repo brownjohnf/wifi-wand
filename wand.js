@@ -10,24 +10,26 @@ function Wand(ssid, interval) {
     this._monitor()
 }
 
-util.inherits(Wireless, EventEmitter);
+util.inherits(Wand, EventEmitter);
 
 Wand.prototype._monitor = function() {
     var self = this
-    var strength
     setInterval(function () {
-      self._scan(self.ssid, function(network) {
-        console.log(network.strength)
-        if (!network.strength === strength) {
+      _scan(self.ssid, function(err, network) {
+        if (err) {
+          self.emit('error', err);
+        } else {
           self.emit('change', network);
         }
       })
-    }, self.interval);
+    }, self.scanInterval);
 }
 
-Wand.prototype._scan = function(ssid, callback) {
+_scan = function(ssid, callback) {
   iwlist.scan('wlan0', function(err, networks) {
-    return _.find(networks, { 'ssid': ssid });
+    console.log('ssid: ', ssid)
+    // console.log('networks: ', networks)
+    callback(err, _.find(networks, { 'ssid': ssid }));
   });
 }
 

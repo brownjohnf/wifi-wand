@@ -1,7 +1,4 @@
 #!/bin/sh
-udevd --daemon
-udevadm trigger
-
 if [ ! -c /dev/fb1 ]; then
   modprobe fbtft_device name=pitft verbose=0 rotate=0
 
