@@ -1,7 +1,5 @@
-
 var pitft = require("pitft");
-console.log("/dev/fb0");
-var fb = pitft("/dev/fb0", true); // Returns a framebuffer in double buffering mode
+var fb = pitft("/dev/fb1", true); // Returns a framebuffer in double buffering mode
 
 // Clear the back buffer
 fb.clear();

@@ -7,6 +7,7 @@ function Wireless(ssid, interval) {
     EventEmitter.call(this);
     this.scanInterval = interval || 3000
     this.ssid = ssid
+    this._monitor()
 }
 
 // Copy methods from the EventEmitter to your DataStore
@@ -23,7 +24,6 @@ DataStore.prototype._monitor = function() {
         }
       })
     }, self.interval);
-
 }
 
 DataStore.prototype._scan = function(ssid, callback) {
