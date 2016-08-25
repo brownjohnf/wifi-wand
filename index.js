@@ -26,14 +26,15 @@ w.on('error', function(err) {
 var xMax = fb.size().width;
 var yMax = fb.size().height;
 
-function floor(v) {
-  return Math.floor(v)
+function div(v) {
+  return v/100
 }
 
 function writeColor(signal) {
-  // chance.integer({min: -80, max: -10})
+  console.log('signal', signal)
   var rgb = _.dropRight(colorScale(signal)._rgb)
-  fb.color(_.map(rgb, floor));
-  fb.rect(0, 0, xMax, yMax, true, 1);
+  rgb = _.map(rgb, div)
+  fb.color(rgb[0], rgb[1], rgb[2]);
+  fb.rect(0, 0, xMax, yMax, true);
   fb.blit();
 }
