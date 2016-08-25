@@ -32,8 +32,24 @@ Wand.prototype._monitor = function() {
 
 _scan = function(ssid, callback) {
   iwlist.scan('wlan0', function(err, networks) {
-    callback(err, _.find(networks, { 'ssid': ssid }));
+    if ( _.isArray(ssid)) {
+      callback(err, _.filterByValues(networks, 'ssid', ssid))
+    } else {
+      callback(err, _.find(networks, { 'ssid': ssid }))
+    }
   });
+}
+
+_.mixin({
+    'filterByValues': function(collection, key, values) {
+        return _.filter(collection, function(o) {
+            return _.contains(values, resolveKey(o, key));
+        });
+    }
+});
+
+function resolveKey(obj, key) {
+    return (typeof key == 'function') ? key(obj) : _.deepGet(obj, key);
 }
 
 module.exports = Wand;

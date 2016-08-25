@@ -7,4 +7,4 @@ if [ ! -c /dev/fb1 ]; then
   mknod /dev/fb1 c $(cat /sys/class/graphics/fb1/dev | tr ':' ' ')
 fi
 
-node ./index.js
+node ./$CMD
