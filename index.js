@@ -27,12 +27,14 @@ w.on('error', function(err) {
 var xMax = fb.size().width;
 var yMax = fb.size().height;
 
+function floor(v) {
+  return Math.floor(v)
+}
+
 function writeColor(signal) {
   // chance.integer({min: -80, max: -10})
-  var rgb = colorScale(signal)._rgb
-  console.log(signal)
-  console.log(Math.floor(rgb[0]), Math.floor(rgb[1]), Math.floor(rgb[2]))
-  fb.color(Math.floor(rgb[0]), Math.floor(rgb[1]), Math.floor(rgb[2]));
+  var rgb = __.dropRight(colorScale(signal)._rgb)
+  fb.color(_.map(rgb, floor));
   fb.rect(0, 0, xMax, yMax, true, 1);
   fb.blit();
 }
