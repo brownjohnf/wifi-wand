@@ -21,9 +21,10 @@ Wand.prototype._monitor = function() {
       _scan(self.ssid, function(err, network) {
         if (err) {
           self.emit('error', err)
-        } else if (!network) {
+        } else if (_.isUndefined(network)) {
           self.emit('error', 'SSID not found on network')
         } else {
+          console.log(network.length)
           self.emit('change', network)
         }
       })
@@ -33,23 +34,17 @@ Wand.prototype._monitor = function() {
 _scan = function(ssid, callback) {
   iwlist.scan('wlan0', function(err, networks) {
     if ( _.isArray(ssid)) {
-      callback(err, _.filterByValues(networks, 'ssid', ssid))
+      if (ssid.length != 3) {
+        err = '3 networks need to be detected'
+      }
+      callback(err, _(networks)
+                     .keyBy('ssid')
+                     .at(ssid)
+                     .value())
     } else {
       callback(err, _.find(networks, { 'ssid': ssid }))
     }
   });
-}
-
-_.mixin({
-    'filterByValues': function(collection, key, values) {
-        return _.filter(collection, function(o) {
-            return _.contains(values, resolveKey(o, key));
-        });
-    }
-});
-
-function resolveKey(obj, key) {
-    return (typeof key == 'function') ? key(obj) : _.deepGet(obj, key);
 }
 
 module.exports = Wand;
