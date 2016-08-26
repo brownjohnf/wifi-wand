@@ -78,7 +78,6 @@ function Wand(ssid, colorScale, fb, interval) {
 
     this.writeColor = function(rgb) {
       // writes an rgb config to the framebuffer
-      this.fb.clear()
       this.fb.color(rgb[0], rgb[1], rgb[2])
       this.fb.rect(0, 0, this.fb.xMax, this.fb.yMax, true)
       // this.fb.blit()
@@ -90,7 +89,6 @@ function Wand(ssid, colorScale, fb, interval) {
       this.fb.font("fantasy", 24, true);
       this.fb.text(this.fb.xMax/2, this.fb.yMax/2-24, network.ssid, true, 0);
       this.fb.text(this.fb.xMax/2, this.fb.yMax/2, network.signal, true, 0);
-      // this.fb.blit()
     }
 
     this.mixColors = function(networks) {
