@@ -15,8 +15,8 @@ w = new Wand(SSIDS, colorScale, fb, process.env.SCAN_INTERVAL)
 
 w.on('change', function(networks) {
   console.log(networks.length)
-  w.getColors(networks, function(colors) {
-    w.writeColor(w.mixColors(colors))
+  w.getColors(networks, function() {
+    w.writeColor(w.mixColors(networks))
   })
 })
 

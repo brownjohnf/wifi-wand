@@ -55,10 +55,11 @@ function Wand(ssid, colorScale, fb, interval) {
                        .dropRight()
                        .map(_div)
                        .value()
-      callback(network);
+      return network
     }
 
     this.getColors = function(networks, callback) {
+      // returns array of objects
       callback(_.map(networks, this.getColor))
     }
 
@@ -68,11 +69,13 @@ function Wand(ssid, colorScale, fb, interval) {
       this.fb.blit()
     }
 
-    this.mixColors = function(rgbArray) {
-      // mixes three rgb arrays
-      return _.map(rgbArray, function(rgb, index) {
-        return rgb[index]
-      })
+    this.mixColors = function(networks) {
+      return _.chain(networks)
+              .orderBy(['ssid'], ['asc'])
+              .map(function(network, index) {
+                return network.color[index]
+              })
+              .value()
     }
 
     this._monitor(this)
