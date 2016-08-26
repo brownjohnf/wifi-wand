@@ -11,18 +11,29 @@ _div = function(v) {
 _scan = function(ssid, callback) {
   iwlist.scan('wlan0', function(err, networks) {
     if ( _.isArray(ssid)) {
-      if (ssid.length != 3) {
-        err = '3 networks need to be detected'
-      }
-      callback(err, _(networks)
-                     .keyBy('ssid')
-                     .at(ssid)
-                     .orderBy('ssid', 'asc')
-                     .value())
+      // if multi mode find all match networks
+       _filterNetworks(networks, ssid, function(networks) {
+         // strangely it sometimes returns an undefined item in the array
+         if (networks.length != 3 || _.some(networks, _.isUndefined)) {
+           err = '3 networks need to be detected'
+         } else {
+           console.log('all good')
+         }
+         callback(err, networks)
+       })
     } else {
+      // if single mode find first network
       callback(err, _.find(networks, { 'ssid': ssid }))
     }
   })
+}
+
+_filterNetworks = function (networks, ssid, callback) {
+  // finds all networks matching array
+  callback(_(networks)
+             .keyBy('ssid')
+             .at(ssid)
+             .value())
 }
 
 // event Emitter
@@ -34,6 +45,7 @@ function Wand(ssid, colorScale, fb, interval) {
     this.fb = fb
 
     this._monitor = function(self) {
+        // emits events
         if (!self.ssid) {
           self.emit('error', 'A network SSID must be set')
         }
@@ -51,6 +63,7 @@ function Wand(ssid, colorScale, fb, interval) {
     }
 
     this.getColor = function(network) {
+      // gets rgb color based on network(obj) strength and colorscale
       network.color = _.chain(this.colorScale(network.signal)._rgb)
                        .dropRight()
                        .map(_div)
@@ -59,14 +72,24 @@ function Wand(ssid, colorScale, fb, interval) {
     }
 
     this.getColors = function(networks, callback) {
-      // returns array of objects
+      // returns array of network objects with color attribue added
       callback(_.map(networks, this.getColor))
     }
 
     this.writeColor = function(rgb) {
+      // writes an rgb config to the framebuffer
       this.fb.color(rgb[0], rgb[1], rgb[2])
       this.fb.rect(0, 0, this.fb.xMax, this.fb.yMax, true)
-      this.fb.blit()
+      // this.fb.blit()
+    }
+
+    this.writeText = function(network) {
+      // writes network name and signal strength to frame buffer
+      console.log(network.ssid, network.signal)
+      this.fb.font("fantasy", 24, true);
+      this.fb.text(this.fb.xMax/2, this.fb.yMax/2-24, network.ssid, true, 0);
+      this.fb.text(this.fb.xMax/2, this.fb.yMax/2, network.signal, true, 0);
+      // this.fb.blit()
     }
 
     this.mixColors = function(networks) {
