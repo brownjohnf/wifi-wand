@@ -18,7 +18,7 @@ w.on('change', function(networks) {
     // networks now have .color
     w.writeColor(w.mixColors(networks))
     _.map(networks, function(n){
-      console.log(n.name + n.signal)
+      console.log(n.ssid + n.signal)
     })
   })
 })
