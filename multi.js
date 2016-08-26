@@ -14,7 +14,8 @@ var _ = require('lodash')
 w = new Wand(SSIDS, colorScale, fb, process.env.SCAN_INTERVAL)
 
 w.on('change', function(networks) {
-  w.getColors(networks, function() {
+  w.getColors(networks, function(networks) {
+    // is unreadable - change!
     w.writeColor(w.mixColors(networks))
     _.map(networks, function(network, index) {
       return w.writeText(network)
