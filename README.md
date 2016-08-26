@@ -19,4 +19,4 @@ To track a single device. Set the following Environment variables
 #### Multi
 To track a single device. Set the following Environment variables
 `CMD` = `/multi.js`
-`SSIDS`= `myHotSpot,yourHotSpot,unicornHotspot` 
+`SSIDS`= `myHotSpot,yourHotSpot,unicornHotspot` (these will be organised Alphabetically and mapped to rgb respectively)
