@@ -17,6 +17,9 @@ w.on('change', function(networks) {
   w.getColors(networks, function(networks) {
     // networks not have .color
     w.writeColor(w.mixColors(networks))
+    _.map(networks, function(n){
+      n.name + n.signal
+    })
   })
 })
 

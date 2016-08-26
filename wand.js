@@ -81,15 +81,6 @@ function Wand(ssid, colorScale, fb, interval) {
       this.fb.rect(0, 0, this.fb.xMax, this.fb.yMax, true)
     }
 
-    this.writeText = function(network) {
-      // writes network name and signal strength to frame buffer
-      console.log(network.ssid, network.signal)
-      fb.color(0, 0, 0);
-      this.fb.font("fantasy", 24, true);
-      this.fb.text(this.fb.xMax/2, this.fb.yMax/(2-24), network.ssid, true, 0);
-      this.fb.text(this.fb.xMax/2, this.fb.yMax/2, network.signal, true, 0);
-    }
-
     this.mixColors = function(networks) {
       return _.chain(networks)
               .orderBy(['ssid'], ['asc'])

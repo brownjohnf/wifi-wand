@@ -14,7 +14,7 @@ w = new Wand(process.env.SSID, colorScale, fb, process.env.SCAN_INTERVAL)
 
 w.on('change', function(network) {
   w.writeColor(w.getColor(network).color)
-  w.writeText(network)
+  console.log(network.ssid, network.signal)
 })
 
 w.on('error', function(err) {
