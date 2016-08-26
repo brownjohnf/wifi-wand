@@ -16,8 +16,6 @@ _scan = function(ssid, callback) {
          // strangely it sometimes returns an undefined item in the array
          if (networks.length != 3 || _.some(networks, _.isUndefined)) {
            err = '3 networks need to be detected'
-         } else {
-           console.log('all good')
          }
          callback(err, networks)
        })
@@ -78,10 +76,9 @@ function Wand(ssid, colorScale, fb, interval) {
 
     this.writeColor = function(rgb) {
       // writes an rgb config to the framebuffer
-      console.log(rgb)
+      console.log('rgb: ', rgb)
       this.fb.color(rgb[0], rgb[1], rgb[2])
       this.fb.rect(0, 0, this.fb.xMax, this.fb.yMax, true)
-      // this.fb.blit()
     }
 
     this.writeText = function(network) {
