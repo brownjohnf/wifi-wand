@@ -1,13 +1,22 @@
 # Wifi wand
 
-Required ENV vars:
+### Requirements
 
-`COLORS` : string of colors to map the scale to. eg: `red,green,blue` (can be hex values too). 
+* 1 or 3 mobile phones cable of creating a 2.4ghz hotspot.
+* 150 raspberry pis
+
+### Environment variables
+
+`COLORS` : string of colors to map the scale to, note no space between commas. eg: `red,green,blue` (can be hex values to).
 `SCAN_INTERVAL` : milliseconds between network scans. default: `3000`. Fastest you can go is `1500` otherwise scans start to fail because of resource busy err.
 
+### Modes
+#### Single
+To track a single device. Set the following Environment variables
+`CMD` = `/index.js`
+`SSID`= `myHotSpot`
 
-Two ways to run this: `single` and `multi`
-
-Required envars for `single`
-
-This is a simple example project for [Resin.io](http://resin.io) which demonstrates a simple Hello, World program and how to install packages on the Linux OS installed on your devices.
+#### Multi
+To track a single device. Set the following Environment variables
+`CMD` = `/multi.js`
+`SSIDS`= `myHotSpot,yourHotSpot,unicornHotspot` 
