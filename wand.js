@@ -1,4 +1,3 @@
-/
 var util = require("util")
     EventEmitter = require("events").EventEmitter
     iwlist = require('wireless-tools/iwlist')
